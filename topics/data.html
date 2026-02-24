@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data • Temuulen SAT Math</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script src="../assets/app.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <!-- NAV -->
+    <div class="nav">
+      <div style="font-weight:900; cursor:pointer;" onclick="goHome()">← Home</div>
+      <div class="links">
+        <a href="algebra.html">Algebra</a>
+        <a href="data.html">Data</a>
+        <a href="advanced.html">Advanced</a>
+        <a href="geometry.html">Geometry</a>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <h1 style="margin:0 0 10px;font-size:34px;line-height:1.15;">Problem Solving & Data Analysis</h1>
+      <p style="margin:0;color:#333;line-height:1.6;">
+        Ratios, rates, percent, and statistics. Click a lesson below to open it.
+      </p>
+    </div>
+
+    <!-- TOC -->
+    <div class="card">
+      <h3 style="margin-top:0;">Table of Contents</h3>
+      <p><a href="#" onclick="showLesson(1); return false;">Lesson 1: Ratios & Proportions</a></p>
+      <p><a href="#" onclick="showLesson(2); return false;">Lesson 2: Percent & Unit Rates</a></p>
+      <p><a href="#" onclick="showLesson(3); return false;">Lesson 3: Statistics (Mean/Median)</a></p>
+      <p class="small">Only the selected lesson will appear.</p>
+    </div>
+
+    <!-- LESSON 1 -->
+    <div class="card" id="lesson1" style="display:none;">
+      <h3 id="l1">Lesson 1: Ratios & Proportions</h3>
+      <p><strong>Goal:</strong> Use ratios to compare quantities and solve proportions.</p>
+
+      <p><strong>Key ideas:</strong></p>
+      <ul>
+        <li>A ratio compares two quantities: 3:2 means 3 parts to 2 parts.</li>
+        <li>A proportion is an equation: a/b = c/d.</li>
+        <li>Cross-multiply to solve: a·d = b·c.</li>
+      </ul>
+
+      <p><strong>Example 1:</strong> Flour:sugar = 5:2. If flour is 20 cups, sugar is how many cups?</p>
+      <ul>
+        <li>Scale factor = 20 ÷ 5 = 4</li>
+        <li>Sugar = 2 × 4 = 8 cups</li>
+      </ul>
+
+      <p><strong>Example 2:</strong> If x/12 = 5/8, find x.</p>
+      <ul>
+        <li>Cross-multiply: 8x = 12·5 = 60</li>
+        <li>x = 60/8 = 7.5</li>
+      </ul>
+
+      <p><strong>Common mistakes:</strong></p>
+      <ul>
+        <li>Flipping only one side of a proportion.</li>
+        <li>Mixing units (miles vs. hours).</li>
+      </ul>
+
+      <p><strong>Quick Practice:</strong></p>
+      <ol>
+        <li>Paint:water = 3:1. If paint is 15, water is?</li>
+        <li>y/9 = 4/3. Find y.</li>
+      </ol>
+      <p class="small"><strong>Answer Key:</strong> (1) 5 (2) 12</p>
+    </div>
+
+    <!-- LESSON 2 -->
+    <div class="card" id="lesson2" style="display:none;">
+      <h3 id="l2">Lesson 2: Percent & Unit Rates</h3>
+      <p><strong>Goal:</strong> Solve problems involving percent change and “per 1” rates.</p>
+
+      <p><strong>Percent basics:</strong></p>
+      <ul>
+        <li>Percent means “out of 100.” 25% = 25/100 = 0.25</li>
+        <li>Percent change = (new − old) / old</li>
+      </ul>
+
+      <p><strong>Example 1 (Percent increase):</strong> Price goes from 50 to 60.</p>
+      <ul>
+        <li>Change = 10</li>
+        <li>Percent increase = 10/50 = 0.2 = 20%</li>
+      </ul>
+
+      <p><strong>Example 2 (Unit rate):</strong> 150 miles in 2.5 hours.</p>
+      <ul>
+        <li>Rate = 150 / 2.5 = 60 miles per hour</li>
+      </ul>
+
+      <p><strong>Quick Practice:</strong></p>
+      <ol>
+        <li>Decrease from 80 to 68. Percent decrease?</li>
+        <li>24 dollars for 6 items. Cost per item?</li>
+      </ol>
+      <p class="small"><strong>Answer Key:</strong> (1) 15% (2) $4</p>
+    </div>
+
+    <!-- LESSON 3 -->
+    <div class="card" id="lesson3" style="display:none;">
+      <h3 id="l3">Lesson 3: Statistics (Mean/Median)</h3>
+      <p><strong>Goal:</strong> Understand averages and how data is summarized.</p>
+
+      <p><strong>Key definitions:</strong></p>
+      <ul>
+        <li><strong>Mean:</strong> sum ÷ count</li>
+        <li><strong>Median:</strong> middle value when sorted</li>
+        <li><strong>Range:</strong> max − min</li>
+      </ul>
+
+      <p><strong>Example 1:</strong> Mean of 4 numbers is 12. What is the sum?</p>
+      <ul>
+        <li>Sum = 12 × 4 = 48</li>
+      </ul>
+
+      <p><strong>Example 2:</strong> Data: 3, 7, 7, 10, 21. Median?</p>
+      <ul>
+        <li>Already sorted, middle is 7</li>
+      </ul>
+
+      <p><strong>Quick Practice:</strong></p>
+      <ol>
+        <li>Mean of 5 numbers is 8. Sum?</li>
+        <li>Median of 2, 5, 9, 12 is?</li>
+      </ol>
+      <p class="small"><strong>Answer Key:</strong> (1) 40 (2) (5+9)/2 = 7</p>
+    </div>
+
+  </div>
+
+  <script>
+    function showLesson(n) {
+      document.getElementById("lesson1").style.display = "none";
+      document.getElementById("lesson2").style.display = "none";
+      document.getElementById("lesson3").style.display = "none";
+
+      const el = document.getElementById("lesson" + n);
+      el.style.display = "block";
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  </script>
+</body>
+</html>
