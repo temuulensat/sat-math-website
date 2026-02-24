@@ -1,209 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Full Practice Test • Temuulen SAT Math</title>
-<link rel="stylesheet" href="assets/style.css" />
-<style>
-  /* Quiz-specific styling that matches your theme */
-  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-  .smallhint{font-size:13px;color:#666;}
-  .results{display:none;margin-top:14px;padding:12px;background:#f1f3f4;border-radius:10px;border:1px solid rgba(0,0,0,0.08);}
-  .q{margin-top:12px;padding:14px;border-radius:12px;border:1px solid rgba(0,0,0,0.08);background:#fff;}
-  .q p{margin:0 0 10px;line-height:1.55;}
-  .choice{display:block;padding:10px;margin-top:8px;background:#f4f6f9;border-radius:10px;border:1px solid rgba(0,0,0,0.06);cursor:pointer;}
-  .choice:hover{border-color:rgba(26,115,232,0.35);}
-  .choice input{margin-right:8px;}
-  .correct{background:rgba(0,160,90,0.10)!important;border-color:rgba(0,160,90,0.45)!important;}
-  .wrong{background:rgba(220,20,60,0.10)!important;border-color:rgba(220,20,60,0.45)!important;}
-  .explain{display:none;margin-top:10px;font-size:14px;background:#fff;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);color:#333;line-height:1.55;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Practice Test • Temuulen SAT Math</title>
+
+  <!-- Match your website design -->
+  <link rel="stylesheet" href="./assets/style.css" />
+
+  <!-- Small page-specific styles (uses your CSS variables/colors) -->
+  <style>
+    .metaRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:12px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--line);
+      background: var(--card);
+      border-radius: 999px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow);
+      font-weight: 800;
+      color: var(--text);
+    }
+    .q{
+      margin-top:12px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .qTitle{
+      margin:0 0 10px;
+      font-size:16px;
+      line-height:1.35;
+    }
+    .choices label{
+      display:block;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius: 12px;
+      margin: 8px 0;
+      cursor:pointer;
+      background: #fff;
+      font-weight: 700;
+    }
+    .choices label:hover{ background: var(--brandSoft); }
+    .choices input{ margin-right: 10px; }
+    .good{ border-color: rgba(46, 204, 113, 0.35); background: #f2fbf5; }
+    .bad{ border-color: rgba(231, 76, 60, 0.35); background: #fff3f2; }
+    .explain{
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--line);
+      font-size: 14px;
+      color: var(--text);
+    }
+    .actionsRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .resultLine{
+      margin-top: 14px;
+      font-weight: 900;
+      font-size: 18px;
+    }
+    .footerNote{
+      margin-top: 24px;
+      text-align:center;
+      color: #666;
+      font-size: 13px;
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
 
-  <!-- NAV -->
-  <div class="nav">
-    <div class="brand" onclick="location.href='index.html'">Temuulen SAT Math</div>
-    <div class="links">
-      <a href="index.html">Home</a>
-      <a href="topics/algebra.html">Algebra</a>
-      <a href="topics/data.html">Data</a>
-      <a href="topics/advanced.html">Advanced</a>
-      <a href="topics/geometry.html">Geometry</a>
-      <a href="practice.html">Practice Test</a>
-    </div>
-  </div>
+    <!-- Same nav style as your site -->
+    <div class="nav">
+      <div class="brand" onclick="location.href='./index.html'">Temuulen SAT Math</div>
 
-  <!-- HERO -->
-  <div class="hero">
-    <h1 style="margin:0 0 10px;font-size:34px;line-height:1.15;">Full Practice Test (20 Questions)</h1>
-    <p style="margin:0;color:#333;line-height:1.6;">
-      Answer all questions, then submit to see your score + explanations.
-    </p>
-  </div>
-
-  <div class="section" id="quiz">
-    <div class="card">
-      <div class="controls">
-        <button class="btn" onclick="gradeQuiz()">Submit & Score</button>
-        <button class="btn secondary" onclick="resetQuiz()">Reset</button>
-        <span class="smallhint">Tip: use this like a real test — no guessing until you try.</span>
+      <div class="links">
+        <a href="./index.html">Home</a>
+        <a href="./topics/algebra.html">Algebra</a>
+        <a href="./topics/data.html">Data</a>
+        <a href="./topics/advanced.html">Advanced</a>
+        <a href="./topics/geometry.html">Geometry</a>
+        <a href="./practice.html">Practice Test</a>
       </div>
 
-      <div class="results" id="resultsBox">
-        <p id="warningText" style="color:#b00020;font-weight:900;margin:0 0 8px;"></p>
-        <p id="totalScore" style="font-weight:900;margin:0 0 8px;"></p>
-        <p id="breakdown" style="margin:0;"></p>
+      <a class="btn navCta" href="./index.html#start">Start Learning</a>
+    </div>
+
+    <!-- Hero matches your homepage look -->
+    <div class="hero">
+      <h1 style="margin:0 0 8px;">Full Practice Test</h1>
+      <p style="margin:0;" class="small">
+        Answer all questions, then submit to see your score + explanations. Use it like a real test.
+      </p>
+
+      <div class="metaRow">
+        <div class="pill">🧮 Questions: <span id="qCount">0</span></div>
+        <div class="pill">⏱ Timer: <span id="timer">00:00</span></div>
+        <button class="btn secondary" id="startTimerBtn" type="button">Start Timer</button>
+        <button class="btn secondary" id="resetTimerBtn" type="button">Reset Timer</button>
       </div>
     </div>
 
-    <div id="questions"></div>
-  </div>
+    <div class="section">
+      <div class="card">
+        <div class="small">
+          Tip: Eliminate choices first. Don’t leave blanks — make your best guess.
+        </div>
 
-  <div style="text-align:center;margin:22px 0 8px;color:#666;font-size:14px;">
-    © <span id="year"></span> Temuulen SAT Math
-  </div>
-</div>
+        <div id="quiz"></div>
 
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+        <div class="actionsRow">
+          <button class="btn" id="submitBtn" type="button">Submit</button>
+          <button class="btn secondary" id="resetBtn" type="button">Reset Answers</button>
+          <button class="btn secondary" id="newSetBtn" type="button">New Question Set</button>
+        </div>
 
-  // 20 questions (4 topics mixed)
-  const questionData = [
-    // Algebra (1-5)
-    {topic:"algebra", q:"Solve: 2x + 6 = 14", a:"B", choices:["2","4","5","6"], exp:"2x=8 → x=4."},
-    {topic:"algebra", q:"Solve: 3(x − 1) = 9", a:"C", choices:["1","2","4","6"], exp:"3x−3=9 → 3x=12 → x=4."},
-    {topic:"algebra", q:"If y = 2x + 3, what is y when x = 5?", a:"D", choices:["10","11","12","13"], exp:"y=2(5)+3=13."},
-    {topic:"algebra", q:"Solve: 5x − 10 = 0", a:"B", choices:["1","2","5","10"], exp:"5x=10 → x=2."},
-    {topic:"algebra", q:"If x/3 = 7, what is x?", a:"C", choices:["14","18","21","24"], exp:"Multiply both sides by 3 → x=21."},
-
-    // Data (6-10)
-    {topic:"data", q:"Percent increase from 40 to 50?", a:"A", choices:["25%","20%","10%","30%"], exp:"Increase=10. Percent=10/40=25%."},
-    {topic:"data", q:"Mean of 5 numbers is 8. What is their sum?", a:"D", choices:["13","20","35","40"], exp:"Sum=8×5=40."},
-    {topic:"data", q:"A bag has 3 red, 5 blue, 2 green. Probability of blue?", a:"B", choices:["3/10","1/2","5/10","2/5"], exp:"Total=10. Blue=5 → 5/10=1/2."},
-    {topic:"data", q:"Speed for 150 miles in 2.5 hours?", a:"B", choices:["50","60","65","75"], exp:"150/2.5=60 mph."},
-    {topic:"data", q:"Ratio 2:3. If first part is 8, second part is:", a:"A", choices:["12","10","6","4"], exp:"Scale factor=4 → second=3×4=12."},
-
-    // Advanced (11-15)
-    {topic:"advanced", q:"If x² = 64 and x is positive, x =", a:"C", choices:["6","7","8","16"], exp:"Positive √64 = 8."},
-    {topic:"advanced", q:"(x − 2)(x + 2) = 0. Solutions are:", a:"B", choices:["2","2 and −2","4","−4"], exp:"x−2=0 or x+2=0 → x=2 or −2."},
-    {topic:"advanced", q:"If 2^x = 16, x =", a:"C", choices:["2","3","4","5"], exp:"2^4=16 → x=4."},
-    {topic:"advanced", q:"√81 =", a:"A", choices:["9","8","7","6"], exp:"√81=9."},
-    {topic:"advanced", q:"x² + x − 6 = 0. Solutions are:", a:"D", choices:["1","2","−2","2 and −3"], exp:"(x+3)(x−2)=0 → x=2 or −3."},
-
-    // Geometry (16-20)
-    {topic:"geo", q:"Circumference C = 2πr. If r = 3, C =", a:"C", choices:["3π","4π","6π","9π"], exp:"C=2π(3)=6π."},
-    {topic:"geo", q:"Right triangle legs 3 and 4. Hypotenuse =", a:"B", choices:["4","5","6","7"], exp:"√(3²+4²)=√25=5."},
-    {topic:"geo", q:"Slope between (1,2) and (5,10) is:", a:"D", choices:["1","3","4","2"], exp:"(10−2)/(5−1)=8/4=2."},
-    {topic:"geo", q:"Triangle angles 50° and 60°. Third angle =", a:"A", choices:["70°","80°","90°","100°"], exp:"180−(50+60)=70."},
-    {topic:"geo", q:"Rectangle perimeter 20, length 6. Width =", a:"C", choices:["2","3","4","5"], exp:"2(6+W)=20 → 6+W=10 → W=4."}
-  ];
-
-  const topics = {
-    algebra: {label:"Algebra"},
-    data: {label:"Data"},
-    advanced: {label:"Advanced"},
-    geo: {label:"Geometry"}
-  };
-
-  // Build the quiz
-  const questionsDiv = document.getElementById("questions");
-  questionData.forEach((item, idx) => {
-    const qNum = idx + 1;
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `
-      <div class="q" data-topic="${item.topic}" data-answer="${item.a}">
-        <p><strong>${qNum}.</strong> ${item.q}</p>
-        ${item.choices.map((text, i) => {
-          const letter = String.fromCharCode(65 + i);
-          return `
-            <label class="choice">
-              <input type="radio" name="q${qNum}" value="${letter}"> ${letter}) ${text}
-            </label>
-          `;
-        }).join("")}
-        <div class="explain">Explanation: ${item.exp}</div>
+        <div class="resultLine" id="scoreLine"></div>
+        <div class="small" id="detailsLine"></div>
       </div>
-    `;
-    questionsDiv.appendChild(card);
-  });
 
-  function gradeQuiz(){
-    const questions = document.querySelectorAll(".q");
-    const results = document.getElementById("resultsBox");
-    const warning = document.getElementById("warningText");
-    const totalScore = document.getElementById("totalScore");
-    const breakdown = document.getElementById("breakdown");
+      <div class="footerNote">© <span id="year"></span> SAT Math with Temuulen</div>
+    </div>
 
-    // clear previous marks
-    warning.textContent = "";
-    document.querySelectorAll(".choice").forEach(c => c.classList.remove("correct","wrong"));
-    document.querySelectorAll(".explain").forEach(e => e.style.display = "none");
+  </div>
 
-    // unanswered check
-    const missing = [];
-    questions.forEach((q, i) => {
-      if(!q.querySelector("input:checked")) missing.push(i+1);
-    });
+  <script>
+    // ===== Question Bank (edit/expand anytime) =====
+    // correct is index 0..3 for A..D
+    const BANK = [
+      { topic:"Algebra", question:"If 3x − 5 = 16, what is the value of x?",
+        choices:["7","6","5","4"], correct:0,
+        explanation:"Add 5: 3x = 21. Divide by 3: x = 7." },
 
-    if(missing.length){
-      results.style.display = "block";
-      warning.textContent = "Please answer all questions. Missing: " + missing.join(", ");
-      totalScore.textContent = "";
-      breakdown.textContent = "";
-      return;
+      { topic:"Linear", question:"A line has slope 2 and passes through (1, 3). What is its y-intercept?",
+        choices:["1","2","3","5"], correct:0,
+        explanation:"y = mx + b. 3 = 2(1) + b → b = 1." },
+
+      { topic:"Systems", question:"Solve: x + y = 10 and x − y = 2. What is x?",
+        choices:["4","5","6","8"], correct:2,
+        explanation:"Add equations: 2x = 12 → x = 6." },
+
+      { topic:"Ratios", question:"Ratio red:blue = 3:5. If blue = 40, how many red?",
+        choices:["15","20","24","30"], correct:2,
+        explanation:"5 parts = 40 → 1 part = 8 → 3 parts = 24." },
+
+      { topic:"Percents", question:"A $80 jacket is discounted by 25%. What is the sale price?",
+        choices:["$60","$55","$50","$45"], correct:0,
+        explanation:"25% of 80 is 20. 80 − 20 = 60." },
+
+      { topic:"Exponents", question:"What is the value of 2^5 × 2^3?",
+        choices:["2^8","2^15","4^8","8^2"], correct:0,
+        explanation:"Same base multiply → add exponents: 2^(5+3) = 2^8." },
+
+      { topic:"Geometry", question:"A rectangle has length 12 and width 5. What is its area?",
+        choices:["17","34","60","120"], correct:2,
+        explanation:"Area = 12 × 5 = 60." },
+
+      { topic:"Geometry", question:"A right triangle has legs 6 and 8. What is the hypotenuse?",
+        choices:["10","12","14","16"], correct:0,
+        explanation:"√(6²+8²)=√(36+64)=√100=10." },
+
+      { topic:"Functions", question:"If f(x) = 2x + 1, what is f(4)?",
+        choices:["7","8","9","10"], correct:2,
+        explanation:"f(4)=2(4)+1=9." },
+
+      { topic:"Statistics", question:"Mean of 5 numbers is 12. What is the sum?",
+        choices:["17","24","60","72"], correct:2,
+        explanation:"Sum = mean × count = 12 × 5 = 60." },
+
+      // Extras for New Question Set
+      { topic:"Algebra", question:"If 2(x + 3) = 18, what is x?",
+        choices:["6","9","12","15"], correct:0,
+        explanation:"Divide by 2: x+3=9 → x=6." },
+
+      { topic:"Linear", question:"Slope through (2,5) and (6,13) is:",
+        choices:["1","2","3","4"], correct:1,
+        explanation:"(13−5)/(6−2)=8/4=2." },
+
+      { topic:"Percents", question:"A number increases from 50 to 65. Percent increase?",
+        choices:["15%","20%","25%","30%"], correct:3,
+        explanation:"Increase 15. 15/50=0.30=30%." },
+
+      { topic:"Geometry", question:"Circumference is 10π. Radius is:",
+        choices:["2","4","5","10"], correct:2,
+        explanation:"2πr = 10π → r = 5." }
+    ];
+
+    const QUIZ_SIZE = 10;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
     }
+    function pickQuestions(){
+      return shuffle(BANK).slice(0, Math.min(QUIZ_SIZE, BANK.length));
+    }
+    function letter(i){ return ["A","B","C","D"][i] || "?"; }
 
-    // scoring + topic breakdown
-    let score = 0;
-    const t = {
-      algebra:{correct:0,total:0},
-      data:{correct:0,total:0},
-      advanced:{correct:0,total:0},
-      geo:{correct:0,total:0}
-    };
+    let questions = pickQuestions();
 
-    questions.forEach((q) => {
-      const correct = q.dataset.answer;
-      const topic = q.dataset.topic;
-      t[topic].total++;
+    // ===== Render =====
+    function renderQuiz(){
+      document.getElementById("qCount").textContent = questions.length;
+      const quiz = document.getElementById("quiz");
+      quiz.innerHTML = "";
 
-      const selected = q.querySelector("input:checked").value;
+      questions.forEach((q, idx) => {
+        const box = document.createElement("div");
+        box.className = "q";
+        box.id = `qbox-${idx}`;
 
-      q.querySelectorAll(".choice").forEach(label => {
-        const val = label.querySelector("input").value;
-        if(val === correct) label.classList.add("correct");
-        if(val === selected && val !== correct) label.classList.add("wrong");
+        const title = document.createElement("div");
+        title.className = "qTitle";
+        title.innerHTML = `<b>Q${idx+1}</b> <span class="small">(${q.topic})</span>: ${q.question}`;
+        box.appendChild(title);
+
+        const choices = document.createElement("div");
+        choices.className = "choices";
+
+        q.choices.forEach((choice, cIdx) => {
+          const id = `q${idx}_c${cIdx}`;
+          const label = document.createElement("label");
+          label.setAttribute("for", id);
+
+          const radio = document.createElement("input");
+          radio.type = "radio";
+          radio.name = `q${idx}`;
+          radio.id = id;
+          radio.value = String(cIdx);
+
+          label.appendChild(radio);
+          label.appendChild(document.createTextNode(`${letter(cIdx)}. ${choice}`));
+          choices.appendChild(label);
+        });
+
+        box.appendChild(choices);
+
+        const exp = document.createElement("div");
+        exp.className = "explain";
+        exp.id = `explain-${idx}`;
+        exp.style.display = "none";
+        box.appendChild(exp);
+
+        quiz.appendChild(box);
       });
 
-      if(selected === correct){
-        score++;
-        t[topic].correct++;
-      }
+      document.getElementById("scoreLine").textContent = "";
+      document.getElementById("detailsLine").textContent = "";
+    }
 
-      q.querySelector(".explain").style.display = "block";
-    });
+    // ===== Grade =====
+    function grade(){
+      let correctCount = 0;
+      let answeredCount = 0;
+      const missed = [];
 
-    results.style.display = "block";
-    totalScore.textContent = `Total Score: ${score} / ${questions.length}`;
-    breakdown.textContent =
-      `By Topic: ${topics.algebra.label} ${t.algebra.correct}/${t.algebra.total} • ` +
-      `${topics.data.label} ${t.data.correct}/${t.data.total} • ` +
-      `${topics.advanced.label} ${t.advanced.correct}/${t.advanced.total} • ` +
-      `${topics.geo.label} ${t.geo.correct}/${t.geo.total}`;
-    results.scrollIntoView({behavior:"smooth", block:"center"});
-  }
+      questions.forEach((q, idx) => {
+        const chosen = document.querySelector(`input[name="q${idx}"]:checked`);
+        const box = document.getElementById(`qbox-${idx}`);
+        const exp = document.getElementById(`explain-${idx}`);
 
-  function resetQuiz(){
-    document.querySelectorAll("input[type=radio]").forEach(r => r.checked = false);
-    document.querySelectorAll(".choice").forEach(c => c.classList.remove("correct","wrong"));
-    document.querySelectorAll(".explain").forEach(e => e.style.display = "none");
-    document.getElementById("resultsBox").style.display = "none";
-  }
-</script>
+        box.classList.remove("good","bad");
+
+        let chosenIndex = null;
+        if(chosen){
+          answeredCount++;
+          chosenIndex = Number(chosen.value);
+        }
+
+        const isCorrect = chosenIndex === q.correct;
+        if(isCorrect) correctCount++;
+        else missed.push(idx+1);
+
+        exp.style.display = "block";
+        const correctText = `${letter(q.correct)}. ${q.choices[q.correct]}`;
+
+        if(chosenIndex === null){
+          box.classList.add("bad");
+          exp.innerHTML =
+            `<b>Result:</b> Not answered.<br>
+             <b>Correct:</b> ${correctText}<br>
+             <b>Explanation:</b> ${q.explanation}`;
+        } else if(isCorrect){
+          box.classList.add("good");
+          exp.innerHTML =
+            `<b>Result:</b> Correct ✅<br>
+             <b>Explanation:</b> ${q.explanation}`;
+        } else {
+          box.classList.add("bad");
+          const chosenText = `${letter(chosenIndex)}. ${q.choices[chosenIndex]}`;
+          exp.innerHTML =
+            `<b>Result:</b> Incorrect ❌<br>
+             <b>Your answer:</b> ${chosenText}<br>
+             <b>Correct:</b> ${correctText}<br>
+             <b>Explanation:</b> ${q.explanation}`;
+        }
+      });
+
+      const total = questions.length;
+      const percent = Math.round((correctCount / total) * 100);
+      const timeStr = document.getElementById("timer").textContent;
+
+      document.getElementById("scoreLine").textContent = `Score: ${correctCount}/${total} (${percent}%)`;
+
+      const missedLine = missed.length ? `Missed: Q${missed.join(", Q")}` : "Perfect score 🎉";
+      document.getElementById("detailsLine").textContent =
+        `Answered: ${answeredCount}/${total} • Time: ${timeStr} • ${missedLine}`;
+    }
+
+    function resetAnswers(){
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      questions.forEach((_, idx) => {
+        const box = document.getElementById(`qbox-${idx}`);
+        const exp = document.getElementById(`explain-${idx}`);
+        box.classList.remove("good","bad");
+        exp.style.display = "none";
+        exp.innerHTML = "";
+      });
+      document.getElementById("scoreLine").textContent = "";
+      document.getElementById("detailsLine").textContent = "";
+    }
+
+    function newSet(){
+      questions = pickQuestions();
+      renderQuiz();
+      resetAnswers();
+    }
+
+    // ===== Timer =====
+    let timerInterval = null;
+    let seconds = 0;
+    function formatTime(s){
+      const m = Math.floor(s/60);
+      const r = s%60;
+      return `${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`;
+    }
+    function startTimer(){
+      if(timerInterval) return;
+      timerInterval = setInterval(() => {
+        seconds++;
+        document.getElementById("timer").textContent = formatTime(seconds);
+      }, 1000);
+    }
+    function resetTimer(){
+      clearInterval(timerInterval);
+      timerInterval = null;
+      seconds = 0;
+      document.getElementById("timer").textContent = "00:00";
+    }
+
+    // ===== Buttons =====
+    document.getElementById("submitBtn").addEventListener("click", grade);
+    document.getElementById("resetBtn").addEventListener("click", resetAnswers);
+    document.getElementById("newSetBtn").addEventListener("click", newSet);
+    document.getElementById("startTimerBtn").addEventListener("click", startTimer);
+    document.getElementById("resetTimerBtn").addEventListener("click", resetTimer);
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    renderQuiz();
+  </script>
 </body>
 </html>
