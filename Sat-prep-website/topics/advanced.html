@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced • Temuulen SAT Math</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script src="../assets/app.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <div class="nav">
+      <div style="font-weight:900; cursor:pointer;" onclick="goHome()">← Home</div>
+      <div class="links">
+        <a href="algebra.html">Algebra</a>
+        <a href="data.html">Data</a>
+        <a href="advanced.html">Advanced</a>
+        <a href="geometry.html">Geometry</a>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h1 style="margin:0 0 10px;font-size:34px;line-height:1.15;">Passport to Advanced Math</h1>
+      <p style="margin:0;color:#333;line-height:1.6;">
+        Quadratics, exponents, and functions. Click a lesson below to open it.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;">Table of Contents</h3>
+      <p><a href="#" onclick="showLesson(1); return false;">Lesson 1: Exponents & Radicals</a></p>
+      <p><a href="#" onclick="showLesson(2); return false;">Lesson 2: Quadratics (Factoring)</a></p>
+      <p><a href="#" onclick="showLesson(3); return false;">Lesson 3: Functions</a></p>
+      <p class="small">Only the selected lesson will appear.</p>
+    </div>
+
+    <div class="card" id="lesson1" style="display:none;">
+      <h3 id="l1">Lesson 1: Exponents & Radicals</h3>
+      <p><strong>Goal:</strong> Simplify expressions using exponent rules and square roots.</p>
+      <ul>
+        <li>x²·x³ = x⁵ (add exponents)</li>
+        <li>2⁴ = 16</li>
+        <li>√81 = 9</li>
+      </ul>
+      <p><strong>Example:</strong> If 2^x = 16, x = 4.</p>
+      <p><strong>Quick Practice:</strong> (1) 2^5 = ? (2) √49 = ?</p>
+      <p class="small"><strong>Answer Key:</strong> (1) 32 (2) 7</p>
+    </div>
+
+    <div class="card" id="lesson2" style="display:none;">
+      <h3 id="l2">Lesson 2: Quadratics (Factoring)</h3>
+      <p><strong>Goal:</strong> Solve quadratic equations by factoring.</p>
+      <p><strong>Example:</strong> x² + x − 6 = 0 → (x+3)(x−2)=0 → x=−3 or x=2</p>
+      <p><strong>Quick Practice:</strong> x² − 9 = 0</p>
+      <p class="small"><strong>Answer Key:</strong> x=3 or x=−3</p>
+    </div>
+
+    <div class="card" id="lesson3" style="display:none;">
+      <h3 id="l3">Lesson 3: Functions</h3>
+      <p><strong>Goal:</strong> Plug values into a function and interpret output.</p>
+      <p><strong>Example:</strong> f(x)=x²−3x. Find f(5): 25−15=10</p>
+      <p><strong>Quick Practice:</strong> If g(x)=2x+1, find g(7).</p>
+      <p class="small"><strong>Answer Key:</strong> 15</p>
+    </div>
+
+  </div>
+
+  <script>
+    function showLesson(n) {
+      document.getElementById("lesson1").style.display = "none";
+      document.getElementById("lesson2").style.display = "none";
+      document.getElementById("lesson3").style.display = "none";
+
+      const el = document.getElementById("lesson" + n);
+      el.style.display = "block";
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  </script>
+</body>
+</html>
