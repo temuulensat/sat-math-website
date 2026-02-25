@@ -1,383 +1,746 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Practice Test • Temuulen SAT Math</title>
-
-  <!-- Match your website design -->
-  <link rel="stylesheet" href="./assets/style.css" />
-
-  <!-- Small page-specific styles (uses your CSS variables/colors) -->
+  <title>Practice Test • Temuulen SAT</title>
   <style>
-    .metaRow{
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --line:#e2e8f0;
+      --blue:#2563eb;
+      --blue2:#1d4ed8;
+      --good:#16a34a;
+      --bad:#dc2626;
+      --shadow: 0 10px 30px rgba(15,23,42,.08);
+      --radius: 16px;
+      --radius2: 12px;
+      --max: 1040px;
+      font-synthesis-weight: none;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:var(--bg);
+    }
+
+    /* Top Nav */
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      background:rgba(246,247,251,.88);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      letter-spacing:.2px;
+      white-space:nowrap;
+    }
+    .brand .dot{
+      width:10px;height:10px;border-radius:999px;background:var(--blue);
+      box-shadow: 0 0 0 6px rgba(37,99,235,.12);
+    }
+    .links{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
+      justify-content:center;
+      color:var(--muted);
+      font-weight:600;
+    }
+    .links a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:6px 4px;
+      border-bottom:2px solid transparent;
+    }
+    .links a:hover{ color:var(--text); border-bottom-color:rgba(37,99,235,.25); }
+    .cta{
+      display:flex; gap:10px; align-items:center;
+      white-space:nowrap;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:700;
+      cursor:pointer;
+      transition: transform .05s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      background:var(--blue);
+      border-color: var(--blue);
+      color:#fff;
+    }
+    .btn.primary:hover{ background:var(--blue2); border-color:var(--blue2); }
+    .btn.ghost{
+      background:transparent;
+    }
+
+    /* Page */
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:26px 18px 60px;
+    }
+    .hero{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:22px 22px 18px;
+    }
+    .hero h1{
+      margin:0 0 6px;
+      font-size:36px;
+      letter-spacing:-.5px;
+    }
+    .hero p{
+      margin:0 0 16px;
+      color:var(--muted);
+      line-height:1.5;
+      font-weight:600;
+    }
+    .pillbar{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      padding:10px;
+      background: #f1f5ff;
+      border:1px solid #dbeafe;
+      border-radius:var(--radius2);
+    }
+    .pill{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      font-weight:800;
+    }
+    .pill span{ color:var(--muted); font-weight:800; }
+    .timer{
+      min-width:110px;
+      justify-content:center;
+    }
+    .tip{
+      margin:18px 4px 14px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    /* Questions */
+    .q{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:18px 18px;
+      margin:14px 0;
+    }
+    .qhead{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:12px;
+    }
+    .qtitle{
+      font-size:16px;
+      font-weight:900;
+      line-height:1.35;
+    }
+    .qtag{
+      font-size:12px;
+      font-weight:900;
+      color:#0b3a9c;
+      background:#eaf2ff;
+      border:1px solid #cfe1ff;
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    .choices{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .choice{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      cursor:pointer;
+      transition: border-color .15s ease, transform .05s ease, background .15s ease;
+    }
+    .choice:hover{ border-color:#bcd2ff; background:#fbfdff; }
+    .choice:active{ transform: translateY(1px); }
+    .choice input{ margin-top:2px; }
+    .choice strong{ min-width: 22px; display:inline-block; }
+
+    /* Results */
+    .actions{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
+      margin-top:16px;
       align-items:center;
-      margin-top:12px;
     }
-    .pill{
+    .result{
+      margin-top:18px;
+      padding:16px 16px;
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow);
+      display:none;
+    }
+    .result h2{ margin:0 0 6px; font-size:22px; }
+    .result .meta{ color:var(--muted); font-weight:700; margin:0 0 12px; }
+    .scoreline{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin: 12px 0 4px;
+    }
+    .badge{
       display:inline-flex;
       align-items:center;
       gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:900;
       border:1px solid var(--line);
-      background: var(--card);
-      border-radius: 999px;
-      padding: 10px 12px;
-      box-shadow: var(--shadow);
-      font-weight: 800;
-      color: var(--text);
+      background:#f8fafc;
     }
-    .q{
-      margin-top:12px;
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
-      background: var(--card);
-      box-shadow: var(--shadow);
-    }
-    .qTitle{
-      margin:0 0 10px;
-      font-size:16px;
-      line-height:1.35;
-    }
-    .choices label{
-      display:block;
-      padding:10px 12px;
-      border:1px solid var(--line);
-      border-radius: 12px;
-      margin: 8px 0;
-      cursor:pointer;
-      background: #fff;
-      font-weight: 700;
-    }
-    .choices label:hover{ background: var(--brandSoft); }
-    .choices input{ margin-right: 10px; }
-    .good{ border-color: rgba(46, 204, 113, 0.35); background: #f2fbf5; }
-    .bad{ border-color: rgba(231, 76, 60, 0.35); background: #fff3f2; }
-    .explain{
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--line);
-      font-size: 14px;
-      color: var(--text);
-    }
-    .actionsRow{
-      display:flex;
+    .badge.good{ border-color:#bbf7d0; background:#f0fdf4; color:#166534; }
+    .badge.bad{ border-color:#fecaca; background:#fef2f2; color:#991b1b; }
+
+    .review{
+      margin-top:14px;
+      display:grid;
       gap:10px;
-      flex-wrap:wrap;
-      margin-top: 14px;
     }
-    .resultLine{
-      margin-top: 14px;
-      font-weight: 900;
-      font-size: 18px;
+    .reviewItem{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 12px;
+      background:#fff;
     }
+    .reviewItem .top{
+      display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+      margin-bottom:6px;
+    }
+    .reviewItem .top .label{
+      font-weight:900;
+    }
+    .reviewItem .top .status{
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#f8fafc;
+      white-space:nowrap;
+    }
+    .status.ok{ border-color:#bbf7d0; background:#f0fdf4; color:#166534; }
+    .status.no{ border-color:#fecaca; background:#fef2f2; color:#991b1b; }
+    .reviewItem .small{
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.45;
+    }
+
     .footerNote{
-      margin-top: 24px;
+      margin-top:24px;
+      color:var(--muted);
+      font-weight:700;
       text-align:center;
-      color: #666;
-      font-size: 13px;
+    }
+
+    @media (max-width: 760px){
+      .hero h1{ font-size:30px; }
+      .links{ display:none; }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-
-    <!-- Same nav style as your site -->
+  <header class="topbar">
     <div class="nav">
-      <div class="brand" onclick="location.href='./index.html'">Temuulen SAT Math</div>
+      <div class="brand"><span class="dot"></span> Temuulen SAT Math</div>
 
-      <div class="links">
-        <a href="./index.html">Home</a>
-        <a href="./topics/algebra.html">Algebra</a>
-        <a href="./topics/data.html">Data</a>
-        <a href="./topics/advanced.html">Advanced</a>
-        <a href="./topics/geometry.html">Geometry</a>
-        <a href="./practice.html">Practice Test</a>
-      </div>
+      <nav class="links" aria-label="Main">
+        <!-- Update these links if your filenames are different -->
+        <a href="index.html">Home</a>
+        <a href="algebra.html">Algebra</a>
+        <a href="data.html">Data</a>
+        <a href="advanced.html">Advanced</a>
+        <a href="geometry.html">Geometry</a>
+        <a href="practice.html" style="color:var(--text); border-bottom-color: rgba(37,99,235,.55);">Practice Test</a>
+      </nav>
 
-      <a class="btn navCta" href="./index.html#start">Start Learning</a>
-    </div>
-
-    <!-- Hero matches your homepage look -->
-    <div class="hero">
-      <h1 style="margin:0 0 8px;">Full Practice Test</h1>
-      <p style="margin:0;" class="small">
-        Answer all questions, then submit to see your score + explanations. Use it like a real test.
-      </p>
-
-      <div class="metaRow">
-        <div class="pill">🧮 Questions: <span id="qCount">0</span></div>
-        <div class="pill">⏱ Timer: <span id="timer">00:00</span></div>
-        <button class="btn secondary" id="startTimerBtn" type="button">Start Timer</button>
-        <button class="btn secondary" id="resetTimerBtn" type="button">Reset Timer</button>
+      <div class="cta">
+        <a class="btn primary" href="index.html">Start Learning</a>
       </div>
     </div>
+  </header>
 
-    <div class="section">
-      <div class="card">
-        <div class="small">
-          Tip: Eliminate choices first. Don’t leave blanks — make your best guess.
-        </div>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Full Practice Test</h1>
+      <p>Answer all questions, then submit to see your score and explanations. Use it like a real test.</p>
 
-        <div id="quiz"></div>
+      <div class="pillbar" role="group" aria-label="Test controls">
+        <div class="pill" id="qCountPill">🏁 <span>Questions:</span> <strong id="questionCount">0</strong></div>
+        <div class="pill timer">⏱️ <span>Timer:</span> <strong id="timerText">00:00</strong></div>
+        <button class="btn ghost" id="startBtn" type="button">Start Timer</button>
+        <button class="btn ghost" id="resetBtn" type="button">Reset Timer</button>
+      </div>
+    </section>
 
-        <div class="actionsRow">
-          <button class="btn" id="submitBtn" type="button">Submit</button>
-          <button class="btn secondary" id="resetBtn" type="button">Reset Answers</button>
-          <button class="btn secondary" id="newSetBtn" type="button">New Question Set</button>
-        </div>
+    <div class="tip">Tip: Eliminate choices first. Don’t leave blanks — make your best guess.</div>
 
-        <div class="resultLine" id="scoreLine"></div>
-        <div class="small" id="detailsLine"></div>
+    <form id="testForm" aria-label="SAT Practice Test">
+      <div id="questionList"></div>
+
+      <div class="actions">
+        <button class="btn primary" type="submit">Submit Test</button>
+        <button class="btn" type="button" id="clearBtn">Clear Answers</button>
+      </div>
+    </form>
+
+    <section class="result" id="resultBox" aria-live="polite">
+      <h2 id="resultTitle">Your Results</h2>
+      <p class="meta" id="resultMeta"></p>
+
+      <div class="scoreline">
+        <span class="badge" id="scoreBadge">Score: 0/0</span>
+        <span class="badge" id="timeBadge">Time: 00:00</span>
       </div>
 
-      <div class="footerNote">© <span id="year"></span> SAT Math with Temuulen</div>
-    </div>
+      <div class="review" id="reviewList"></div>
 
-  </div>
+      <div class="actions" style="margin-top:14px;">
+        <button class="btn" id="retakeBtn" type="button">Retake Test</button>
+      </div>
+    </section>
+
+    <div class="footerNote">Built by Temuulen • SAT Math Practice</div>
+  </main>
 
   <script>
-    // ===== Question Bank (edit/expand anytime) =====
-    // correct is index 0..3 for A..D
-    const BANK = [
-      { topic:"Algebra", question:"If 3x − 5 = 16, what is the value of x?",
-        choices:["7","6","5","4"], correct:0,
-        explanation:"Add 5: 3x = 21. Divide by 3: x = 7." },
+    // ----------------------------
+    // Question Bank (20 questions)
+    // answer = index (0=A, 1=B, 2=C, 3=D)
+    // ----------------------------
+    const questions = [
+      {
+        id: 1,
+        topic: "Exponents",
+        question: "What is the value of 2^5 × 2^3?",
+        choices: ["2^8", "2^15", "4^8", "8^2"],
+        answer: 0,
+        explanation: "Same base → add exponents: 2^(5+3) = 2^8."
+      },
+      {
+        id: 2,
+        topic: "Geometry",
+        question: "A right triangle has legs 6 and 8. What is the hypotenuse?",
+        choices: ["10", "12", "14", "16"],
+        answer: 0,
+        explanation: "Use Pythagorean theorem: √(6^2+8^2)=√(36+64)=√100=10."
+      },
+      {
+        id: 3,
+        topic: "Statistics",
+        question: "The mean of 5 numbers is 12. What is the sum of the numbers?",
+        choices: ["17", "60", "72", "84"],
+        answer: 1,
+        explanation: "Sum = mean × count = 12×5 = 60."
+      },
+      {
+        id: 4,
+        topic: "Algebra",
+        question: "If 3x − 7 = 11, what is the value of x?",
+        choices: ["4", "5", "6", "7"],
+        answer: 2,
+        explanation: "3x − 7 = 11 → 3x = 18 → x = 6."
+      },
+      {
+        id: 5,
+        topic: "Algebra (Systems)",
+        question: "What is the solution (x, y) to the system: x + y = 9 and x − y = 3?",
+        choices: ["(6, 3)", "(3, 6)", "(9, 0)", "(0, 9)"],
+        answer: 0,
+        explanation: "Add equations: 2x=12 → x=6. Then y=3."
+      },
+      {
+        id: 6,
+        topic: "Functions",
+        question: "If f(x) = 2x^2 − 3, what is f(2)?",
+        choices: ["5", "3", "1", "−1"],
+        answer: 0,
+        explanation: "f(2)=2(2^2)−3=8−3=5."
+      },
+      {
+        id: 7,
+        topic: "Ratios",
+        question: "A recipe uses flour and sugar in a ratio of 3:2. If there are 18 cups of flour, how many cups of sugar are needed?",
+        choices: ["6", "9", "12", "15"],
+        answer: 2,
+        explanation: "3 parts flour = 18 → 1 part = 6. Sugar is 2 parts → 12."
+      },
+      {
+        id: 8,
+        topic: "Geometry (Circle)",
+        question: "A circle has radius 5. What is its area?",
+        choices: ["10π", "25π", "50π", "100π"],
+        answer: 1,
+        explanation: "Area = πr^2 = π(5^2)=25π."
+      },
+      {
+        id: 9,
+        topic: "Probability",
+        question: "A bag has 3 red, 2 blue, and 5 green marbles. What is the probability of picking a blue marble?",
+        choices: ["1/10", "1/5", "2/5", "1/2"],
+        answer: 1,
+        explanation: "Total marbles = 10. Blue = 2 → 2/10 = 1/5."
+      },
+      {
+        id: 10,
+        topic: "Exponents",
+        question: "What is the value of (2^3)(2^5)?",
+        choices: ["2^8", "2^15", "4^8", "8^2"],
+        answer: 0,
+        explanation: "Same base → add exponents: 2^(3+5)=2^8."
+      },
 
-      { topic:"Linear", question:"A line has slope 2 and passes through (1, 3). What is its y-intercept?",
-        choices:["1","2","3","5"], correct:0,
-        explanation:"y = mx + b. 3 = 2(1) + b → b = 1." },
-
-      { topic:"Systems", question:"Solve: x + y = 10 and x − y = 2. What is x?",
-        choices:["4","5","6","8"], correct:2,
-        explanation:"Add equations: 2x = 12 → x = 6." },
-
-      { topic:"Ratios", question:"Ratio red:blue = 3:5. If blue = 40, how many red?",
-        choices:["15","20","24","30"], correct:2,
-        explanation:"5 parts = 40 → 1 part = 8 → 3 parts = 24." },
-
-      { topic:"Percents", question:"A $80 jacket is discounted by 25%. What is the sale price?",
-        choices:["$60","$55","$50","$45"], correct:0,
-        explanation:"25% of 80 is 20. 80 − 20 = 60." },
-
-      { topic:"Exponents", question:"What is the value of 2^5 × 2^3?",
-        choices:["2^8","2^15","4^8","8^2"], correct:0,
-        explanation:"Same base multiply → add exponents: 2^(5+3) = 2^8." },
-
-      { topic:"Geometry", question:"A rectangle has length 12 and width 5. What is its area?",
-        choices:["17","34","60","120"], correct:2,
-        explanation:"Area = 12 × 5 = 60." },
-
-      { topic:"Geometry", question:"A right triangle has legs 6 and 8. What is the hypotenuse?",
-        choices:["10","12","14","16"], correct:0,
-        explanation:"√(6²+8²)=√(36+64)=√100=10." },
-
-      { topic:"Functions", question:"If f(x) = 2x + 1, what is f(4)?",
-        choices:["7","8","9","10"], correct:2,
-        explanation:"f(4)=2(4)+1=9." },
-
-      { topic:"Statistics", question:"Mean of 5 numbers is 12. What is the sum?",
-        choices:["17","24","60","72"], correct:2,
-        explanation:"Sum = mean × count = 12 × 5 = 60." },
-
-      // Extras for New Question Set
-      { topic:"Algebra", question:"If 2(x + 3) = 18, what is x?",
-        choices:["6","9","12","15"], correct:0,
-        explanation:"Divide by 2: x+3=9 → x=6." },
-
-      { topic:"Linear", question:"Slope through (2,5) and (6,13) is:",
-        choices:["1","2","3","4"], correct:1,
-        explanation:"(13−5)/(6−2)=8/4=2." },
-
-      { topic:"Percents", question:"A number increases from 50 to 65. Percent increase?",
-        choices:["15%","20%","25%","30%"], correct:3,
-        explanation:"Increase 15. 15/50=0.30=30%." },
-
-      { topic:"Geometry", question:"Circumference is 10π. Radius is:",
-        choices:["2","4","5","10"], correct:2,
-        explanation:"2πr = 10π → r = 5." }
+      // +10 more (11–20)
+      {
+        id: 11,
+        topic: "Quadratics",
+        question: "Which of the following is a solution to x^2 − 5x + 6 = 0?",
+        choices: ["x = 1", "x = 2", "x = 4", "x = 5"],
+        answer: 1,
+        explanation: "Factor: (x−2)(x−3)=0 → x=2 or x=3. Only x=2 is listed."
+      },
+      {
+        id: 12,
+        topic: "Inequalities",
+        question: "If 2x + 3 < 11, which value of x satisfies the inequality?",
+        choices: ["3", "4", "5", "6"],
+        answer: 0,
+        explanation: "2x+3<11 → 2x<8 → x<4. Only 3 works."
+      },
+      {
+        id: 13,
+        topic: "Percent",
+        question: "A $80 jacket is discounted by 25%. What is the sale price?",
+        choices: ["$20", "$55", "$60", "$65"],
+        answer: 2,
+        explanation: "25% of 80 is 20. Sale price = 80−20 = 60."
+      },
+      {
+        id: 14,
+        topic: "Linear Equations",
+        question: "If 5(x − 2) = 3x + 6, what is x?",
+        choices: ["6", "7", "8", "9"],
+        answer: 2,
+        explanation: "5x−10=3x+6 → 2x=16 → x=8."
+      },
+      {
+        id: 15,
+        topic: "Geometry (Angles)",
+        question: "Two angles are supplementary. One angle is 35°. What is the other angle?",
+        choices: ["55°", "105°", "145°", "215°"],
+        answer: 2,
+        explanation: "Supplementary angles sum to 180°. 180−35=145."
+      },
+      {
+        id: 16,
+        topic: "Data",
+        question: "The median of the set {3, 7, 8, 10, 12, 13, 20} is:",
+        choices: ["8", "9", "10", "11"],
+        answer: 2,
+        explanation: "There are 7 numbers. The 4th number (in order) is the median: 10."
+      },
+      {
+        id: 17,
+        topic: "Geometry (Area)",
+        question: "A rectangle has length 12 and width 7. What is its area?",
+        choices: ["19", "38", "84", "96"],
+        answer: 2,
+        explanation: "Area = length × width = 12×7 = 84."
+      },
+      {
+        id: 18,
+        topic: "Fractions",
+        question: "What is 3/4 of 28?",
+        choices: ["7", "14", "21", "24"],
+        answer: 2,
+        explanation: "(3/4)×28 = 3×7 = 21."
+      },
+      {
+        id: 19,
+        topic: "Statistics",
+        question: "The mean of 8 numbers is 12. What is the sum of the numbers?",
+        choices: ["20", "96", "104", "120"],
+        answer: 1,
+        explanation: "Sum = mean × count = 12×8 = 96."
+      },
+      {
+        id: 20,
+        topic: "Algebra",
+        question: "If x/3 = 5, what is x?",
+        choices: ["8", "12", "15", "18"],
+        answer: 2,
+        explanation: "Multiply both sides by 3: x = 15."
+      }
     ];
 
-    const QUIZ_SIZE = 10;
+    // ----------------------------
+    // Render Questions
+    // ----------------------------
+    const questionList = document.getElementById("questionList");
+    const questionCount = document.getElementById("questionCount");
+    questionCount.textContent = questions.length;
 
-    function shuffle(arr){
-      const a = arr.slice();
-      for(let i=a.length-1;i>0;i--){
-        const j = Math.floor(Math.random()*(i+1));
-        [a[i],a[j]] = [a[j],a[i]];
-      }
-      return a;
-    }
-    function pickQuestions(){
-      return shuffle(BANK).slice(0, Math.min(QUIZ_SIZE, BANK.length));
-    }
-    function letter(i){ return ["A","B","C","D"][i] || "?"; }
+    function letter(i){ return ["A","B","C","D"][i]; }
 
-    let questions = pickQuestions();
-
-    // ===== Render =====
-    function renderQuiz(){
-      document.getElementById("qCount").textContent = questions.length;
-      const quiz = document.getElementById("quiz");
-      quiz.innerHTML = "";
-
+    function renderQuestions(){
+      questionList.innerHTML = "";
       questions.forEach((q, idx) => {
-        const box = document.createElement("div");
-        box.className = "q";
-        box.id = `qbox-${idx}`;
+        const card = document.createElement("section");
+        card.className = "q";
+        card.id = `q${q.id}`;
+
+        const head = document.createElement("div");
+        head.className = "qhead";
 
         const title = document.createElement("div");
-        title.className = "qTitle";
-        title.innerHTML = `<b>Q${idx+1}</b> <span class="small">(${q.topic})</span>: ${q.question}`;
-        box.appendChild(title);
+        title.className = "qtitle";
+        title.textContent = `Q${idx+1} (${q.topic}): ${q.question}`;
+
+        const tag = document.createElement("div");
+        tag.className = "qtag";
+        tag.textContent = q.topic;
+
+        head.appendChild(title);
+        head.appendChild(tag);
 
         const choices = document.createElement("div");
         choices.className = "choices";
 
-        q.choices.forEach((choice, cIdx) => {
-          const id = `q${idx}_c${cIdx}`;
+        q.choices.forEach((c, i) => {
           const label = document.createElement("label");
-          label.setAttribute("for", id);
+          label.className = "choice";
 
-          const radio = document.createElement("input");
-          radio.type = "radio";
-          radio.name = `q${idx}`;
-          radio.id = id;
-          radio.value = String(cIdx);
+          const input = document.createElement("input");
+          input.type = "radio";
+          input.name = `q_${q.id}`;
+          input.value = String(i);
 
-          label.appendChild(radio);
-          label.appendChild(document.createTextNode(`${letter(cIdx)}. ${choice}`));
+          const text = document.createElement("div");
+          text.innerHTML = `<strong>${letter(i)}.</strong> ${c}`;
+
+          label.appendChild(input);
+          label.appendChild(text);
           choices.appendChild(label);
         });
 
-        box.appendChild(choices);
-
-        const exp = document.createElement("div");
-        exp.className = "explain";
-        exp.id = `explain-${idx}`;
-        exp.style.display = "none";
-        box.appendChild(exp);
-
-        quiz.appendChild(box);
+        card.appendChild(head);
+        card.appendChild(choices);
+        questionList.appendChild(card);
       });
-
-      document.getElementById("scoreLine").textContent = "";
-      document.getElementById("detailsLine").textContent = "";
     }
 
-    // ===== Grade =====
-    function grade(){
-      let correctCount = 0;
-      let answeredCount = 0;
-      const missed = [];
+    renderQuestions();
 
-      questions.forEach((q, idx) => {
-        const chosen = document.querySelector(`input[name="q${idx}"]:checked`);
-        const box = document.getElementById(`qbox-${idx}`);
-        const exp = document.getElementById(`explain-${idx}`);
+    // ----------------------------
+    // Timer
+    // ----------------------------
+    const timerText = document.getElementById("timerText");
+    const startBtn = document.getElementById("startBtn");
+    const resetBtn = document.getElementById("resetBtn");
 
-        box.classList.remove("good","bad");
-
-        let chosenIndex = null;
-        if(chosen){
-          answeredCount++;
-          chosenIndex = Number(chosen.value);
-        }
-
-        const isCorrect = chosenIndex === q.correct;
-        if(isCorrect) correctCount++;
-        else missed.push(idx+1);
-
-        exp.style.display = "block";
-        const correctText = `${letter(q.correct)}. ${q.choices[q.correct]}`;
-
-        if(chosenIndex === null){
-          box.classList.add("bad");
-          exp.innerHTML =
-            `<b>Result:</b> Not answered.<br>
-             <b>Correct:</b> ${correctText}<br>
-             <b>Explanation:</b> ${q.explanation}`;
-        } else if(isCorrect){
-          box.classList.add("good");
-          exp.innerHTML =
-            `<b>Result:</b> Correct ✅<br>
-             <b>Explanation:</b> ${q.explanation}`;
-        } else {
-          box.classList.add("bad");
-          const chosenText = `${letter(chosenIndex)}. ${q.choices[chosenIndex]}`;
-          exp.innerHTML =
-            `<b>Result:</b> Incorrect ❌<br>
-             <b>Your answer:</b> ${chosenText}<br>
-             <b>Correct:</b> ${correctText}<br>
-             <b>Explanation:</b> ${q.explanation}`;
-        }
-      });
-
-      const total = questions.length;
-      const percent = Math.round((correctCount / total) * 100);
-      const timeStr = document.getElementById("timer").textContent;
-
-      document.getElementById("scoreLine").textContent = `Score: ${correctCount}/${total} (${percent}%)`;
-
-      const missedLine = missed.length ? `Missed: Q${missed.join(", Q")}` : "Perfect score 🎉";
-      document.getElementById("detailsLine").textContent =
-        `Answered: ${answeredCount}/${total} • Time: ${timeStr} • ${missedLine}`;
-    }
-
-    function resetAnswers(){
-      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-      questions.forEach((_, idx) => {
-        const box = document.getElementById(`qbox-${idx}`);
-        const exp = document.getElementById(`explain-${idx}`);
-        box.classList.remove("good","bad");
-        exp.style.display = "none";
-        exp.innerHTML = "";
-      });
-      document.getElementById("scoreLine").textContent = "";
-      document.getElementById("detailsLine").textContent = "";
-    }
-
-    function newSet(){
-      questions = pickQuestions();
-      renderQuiz();
-      resetAnswers();
-    }
-
-    // ===== Timer =====
-    let timerInterval = null;
     let seconds = 0;
-    function formatTime(s){
+    let timerId = null;
+
+    function fmtTime(s){
       const m = Math.floor(s/60);
-      const r = s%60;
+      const r = s % 60;
       return `${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`;
     }
+    function updateTimer(){
+      timerText.textContent = fmtTime(seconds);
+    }
     function startTimer(){
-      if(timerInterval) return;
-      timerInterval = setInterval(() => {
+      if (timerId) return;
+      timerId = setInterval(() => {
         seconds++;
-        document.getElementById("timer").textContent = formatTime(seconds);
+        updateTimer();
       }, 1000);
+      startBtn.textContent = "Timer Running";
+      startBtn.disabled = true;
     }
     function resetTimer(){
-      clearInterval(timerInterval);
-      timerInterval = null;
+      if (timerId){
+        clearInterval(timerId);
+        timerId = null;
+      }
       seconds = 0;
-      document.getElementById("timer").textContent = "00:00";
+      updateTimer();
+      startBtn.textContent = "Start Timer";
+      startBtn.disabled = false;
     }
 
-    // ===== Buttons =====
-    document.getElementById("submitBtn").addEventListener("click", grade);
-    document.getElementById("resetBtn").addEventListener("click", resetAnswers);
-    document.getElementById("newSetBtn").addEventListener("click", newSet);
-    document.getElementById("startTimerBtn").addEventListener("click", startTimer);
-    document.getElementById("resetTimerBtn").addEventListener("click", resetTimer);
+    startBtn.addEventListener("click", startTimer);
+    resetBtn.addEventListener("click", resetTimer);
 
-    document.getElementById("year").textContent = new Date().getFullYear();
-    renderQuiz();
+    // ----------------------------
+    // Scoring + Review
+    // ----------------------------
+    const form = document.getElementById("testForm");
+    const resultBox = document.getElementById("resultBox");
+    const reviewList = document.getElementById("reviewList");
+    const scoreBadge = document.getElementById("scoreBadge");
+    const timeBadge = document.getElementById("timeBadge");
+    const resultMeta = document.getElementById("resultMeta");
+    const retakeBtn = document.getElementById("retakeBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    function getSelected(qid){
+      const selected = document.querySelector(`input[name="q_${qid}"]:checked`);
+      return selected ? Number(selected.value) : null;
+    }
+
+    function scrollToResults(){
+      resultBox.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // stop timer when submitting
+      if (timerId){
+        clearInterval(timerId);
+        timerId = null;
+      }
+      startBtn.textContent = "Start Timer";
+      startBtn.disabled = false;
+
+      let correct = 0;
+      const total = questions.length;
+      const details = [];
+
+      questions.forEach((q, idx) => {
+        const sel = getSelected(q.id);
+        const ok = sel === q.answer;
+        if (ok) correct++;
+
+        details.push({
+          number: idx + 1,
+          topic: q.topic,
+          question: q.question,
+          selected: sel,
+          correctIndex: q.answer,
+          ok,
+          explanation: q.explanation,
+          choices: q.choices
+        });
+      });
+
+      // Build review UI
+      reviewList.innerHTML = "";
+      details.forEach(d => {
+        const item = document.createElement("div");
+        item.className = "reviewItem";
+
+        const top = document.createElement("div");
+        top.className = "top";
+
+        const label = document.createElement("div");
+        label.className = "label";
+        label.textContent = `Q${d.number} (${d.topic})`;
+
+        const status = document.createElement("div");
+        status.className = `status ${d.ok ? "ok" : "no"}`;
+        status.textContent = d.ok ? "Correct" : "Needs Review";
+
+        top.appendChild(label);
+        top.appendChild(status);
+
+        const small = document.createElement("div");
+        small.className = "small";
+
+        const yourAns = (d.selected === null)
+          ? "No answer"
+          : `${letter(d.selected)} (${d.choices[d.selected]})`;
+
+        const corrAns = `${letter(d.correctIndex)} (${d.choices[d.correctIndex]})`;
+
+        small.innerHTML = `
+          <div><strong>Your answer:</strong> ${yourAns}</div>
+          <div><strong>Correct answer:</strong> ${corrAns}</div>
+          <div style="margin-top:6px;"><strong>Explanation:</strong> ${d.explanation}</div>
+        `;
+
+        item.appendChild(top);
+        item.appendChild(small);
+        reviewList.appendChild(item);
+      });
+
+      // Score display
+      scoreBadge.textContent = `Score: ${correct}/${total}`;
+      timeBadge.textContent = `Time: ${fmtTime(seconds)}`;
+
+      scoreBadge.className = "badge " + (correct / total >= 0.75 ? "good" : (correct / total >= 0.5 ? "" : "bad"));
+
+      resultMeta.textContent = "Review explanations below and retake the test to improve your accuracy.";
+
+      resultBox.style.display = "block";
+      scrollToResults();
+    });
+
+    retakeBtn.addEventListener("click", () => {
+      // clear answers + hide results + reset timer
+      document.querySelectorAll("input[type='radio']").forEach(i => i.checked = false);
+      resultBox.style.display = "none";
+      reviewList.innerHTML = "";
+      resetTimer();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    clearBtn.addEventListener("click", () => {
+      document.querySelectorAll("input[type='radio']").forEach(i => i.checked = false);
+    });
+
+    // initialize timer text
+    updateTimer();
   </script>
 </body>
 </html>
